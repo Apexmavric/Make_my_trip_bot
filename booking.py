@@ -1,24 +1,21 @@
-import time
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
+import re
 import os
+import time
+import mainfile
+import datetime
+import constants
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-import re
-import datetime
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
 
 def good(str):
     numbers = re.findall(r'\d+', str)
     alphabets = re.findall(r'[a-zA-Z]+', str)
     return (len(numbers)>0 and int(numbers[0])>=len(pe) and alphabets[0]=='AVAILABLE')
-class P:
-    def __init__(self, name, age, gender):
-        self.name = name
-        self.age = age
-        self.gender = gender
 
 def GetDate(Date,f):
     date_object = datetime.datetime.strptime(Date, "%d-%m-%Y")
@@ -28,7 +25,7 @@ def GetDate(Date,f):
     full_name_month = date_object.strftime("%B")
     year = date_object.strftime("%Y")
     day = date_object.strftime("%d")
-    days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    days = constants.days
     Reqday = days[idx]
     Start_Date = Reqday + " " + month + " " + day + " " + year
     if(f==1) :req_month = full_name_month + " " + year
@@ -49,43 +46,7 @@ def fname(name):
 
 def State(Pincode):
     val = int(Pincode[:3])
-    pstates = {(121,131):"Haryana",
-               (744,744):"Andaman and Nicobar",
-               (110,110):"Delhi",
-               (396,396):"Dadra and Nagar Haveli",
-               (490,497):"Chhattisgarh",
-               (781,788):"Assam",
-               (790,792):"Arunachal Pradesh",
-               (797,798):"Nagaland",
-               (682,682): "Lakshadweep",
-               (500,509): "Telangana",
-               (737,737): "Sikkim",
-               (700,743): "West Bengal",
-               (813,835): "Jharkhand",
-               (783,794): "Meghalaya",
-               (751,770): "Odisha",
-               (244,263): "Uttarakhand",
-               (180,194): "Jammu and Kashmir",
-               (799,799): "Tripura",
-               (796,796): "Mizoram",
-               (301,345): "Rajasthan",
-               (795,795): "Manipur",
-               (360,396): "Gujarat",
-               (403,403): "Goa",
-               (800,855): "Bihar",
-               (507,535): "Andhra Pradesh",
-               (560,591): "Karnataka",
-               (362,396): "Daman and Diu",
-               (400,445): "Maharashtra",
-               (450,488): "Madhya Pradesh",
-               (201,285): "Uttar Pradesh",
-               (670,695): "Kerala",
-               (140,160): "Chandigarh",
-               (600,643): "Tamil Nadu",
-               (533,673): "Puducherry",
-               (140,160): "Punjab",
-               (171,177): "Himachal Pradesh"
-               }
+    pstates = constants.pstates
     req_state=""
     for pair,state in pstates.items():
       if(pair[0]<=val and val<=pair[1]):
@@ -96,18 +57,18 @@ def State(Pincode):
     time.sleep(2)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//li[text()='{req_state}']"))).click()
 
-type = ""
-User_Name = ''
-Pass = ''
-Start_City = ""
-End_City = ""
-Start_Date = ""
-Return_Date =""
-pe = []
-irctc = ''
-Pincode = ''
-Mobile = ""
-pclass = ""
+type = mainfile.type
+User_Name = mainfile.User_Name
+Pass = mainfile.Pass
+Start_City = mainfile.Start_City
+End_City = mainfile.End_City
+Start_Date = mainfile.Start_Date
+Return_Date =mainfile.Return_Date
+pe = mainfile.pe
+irctc = mainfile.irctc
+Pincode = mainfile.Pincode
+Mobile = mainfile.Mobile
+pclass = mainfile.pclass
 
 os.environ['PATH'] += r"C:/Users/MSI/Desktop/SeleniumFolders"
 options = webdriver.ChromeOptions()
@@ -121,8 +82,10 @@ driver.maximize_window()
 action = ActionChains(driver)
 
 
-
 type = type.lower()
+if(type!='t' or type!="f"):
+    print("Please Enter a valid mode of transport!")
+    driver.quit()
 if (type == "t"): type = "railways"
 if (type == "f"): type = "flights"
 if(type=="railways"):driver.get(f"https://www.makemytrip.com/{type}/")
@@ -257,7 +220,7 @@ if(type=='railways'):
     State(Pincode)
     time.sleep(3)
     driver.find_element(By.CLASS_NAME,"checkboxWithLblWpr__label").click()
-    time.sleep(1)
+    time.sleep(2)
     driver.find_element(By.CLASS_NAME,"paymentBtn").click()
 else:
     child = []
@@ -366,4 +329,6 @@ else:
     driver.find_element(By.XPATH,"//*[@id='mainSection_1']/div[2]/span").click()
     time.sleep(2)
     driver.find_element(By.XPATH,"//*[@id='ACKNOWLEDGE_SECTION']/div/button").click()
+
 print('Please enter your credentials on the website')
+print('Happy Journey')
