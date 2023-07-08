@@ -96,23 +96,18 @@ def State(Pincode):
     time.sleep(2)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//li[text()='{req_state}']"))).click()
 
-type = "t"
-User_Name = 'apxmvrc21@gmail.com'
-Pass = 'Apexmavric@243'
-Start_City = "Mumbai"
-End_City = "Ahemdabad"
-Start_Date = "17-07-2023"
+type = ""
+User_Name = ''
+Pass = ''
+Start_City = ""
+End_City = ""
+Start_Date = ""
 Return_Date =""
 pe = []
-pe.append(P("Vidhit Atul Patel",21,"m"))
-pe.append(P("Harsha Patel",51,"f"))
-pe.append(P("Atul Rasiklal Patel",53,"m"))
-pe.append(P("Pranali Atul Patel",25,"f"))
-pe.append(P("Random Kid",10,"f"))
-irctc = 'Apexmavric'
-Pincode = '400077'
-Mobile = "8879699467"
-pclass = "3A"
+irctc = ''
+Pincode = ''
+Mobile = ""
+pclass = ""
 
 os.environ['PATH'] += r"C:/Users/MSI/Desktop/SeleniumFolders"
 options = webdriver.ChromeOptions()
@@ -124,22 +119,7 @@ driver = webdriver.Chrome(options=options)
 driver.get("https://www.makemytrip.com/")
 driver.maximize_window()
 action = ActionChains(driver)
-# options.addArguments("disable-infobars");
 
-
-# LOGIN :
-# actions = ActionChains(driver)
-# actions.send_keys(Keys.).perform()
-# driver.find_element(By.XPATH,"/html/body/div[1]/div/div[1]/div[1]/div[1]/ul/li[4]").click()
-# time.sleep(1)
-# driver.find_element(By.ID,"username").send_keys(User_Name)
-# time.sleep(1)
-# driver.find_element(By.XPATH,"/html/body/div[1]/div/div[1]/div[1]/div[2]/div[2]/div/section/form/div[2]/button/span").click()
-# time.sleep(1)
-# driver.find_element(By.ID,"password").send_keys(Pass)
-# time.sleep(1)
-# driver.find_element(By.XPATH,"/html/body/div[1]/div/div[1]/div[1]/div[2]/div[2]/div/section/form/div[2]/button/span").click()
-# time.sleep(3)
 
 
 type = type.lower()
@@ -370,7 +350,6 @@ else:
     pin = driver.find_element(By.CSS_SELECTOR,"[placeholder='Your Pincode']")
     pin.clear()
     pin.send_keys(Pincode)
-    # driver.refresh()
     time.sleep(2)
     checkbox_xpath = "//*[@id='BILLING_ADDRESS']/div/div[3]/div/span"
     checkbox = wait.until(EC.element_to_be_clickable((By.XPATH, checkbox_xpath)))
@@ -388,5 +367,3 @@ else:
     time.sleep(2)
     driver.find_element(By.XPATH,"//*[@id='ACKNOWLEDGE_SECTION']/div/button").click()
 print('Please enter your credentials on the website')
-
-# //*[@id="mainSection_0"]/div[8]/button
